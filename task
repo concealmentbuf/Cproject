@@ -1,0 +1,95 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+enum Choice { ROCK, PAPER, SCISSORS };
+
+Choice getPlayerChoice() {
+  int choice;
+  std::cout << "Выберите вариант:\n";
+  std::cout << "1. Камень\n";
+  std::cout << "2. Ножницы\n";
+  std::cout << "3. Бумага\n";
+  std::cout << "Введите номер: ";
+  std::cin >> choice;
+
+  switch (choice) {
+    case 1:
+      return ROCK;
+    case 2:
+      return SCISSORS;
+    case 3:
+      return PAPER;
+    default:
+      std::cout << "Некорректный выбор. Выбран вариант по умолчанию: Камень.\n";
+      return ROCK;
+  }
+}
+
+Choice getComputerChoice() {
+  srand(static_cast<unsigned int>(time(0)));
+  int choice = rand() % 3;
+
+  switch (choice) {
+    case 0:
+      return ROCK;
+    case 1:
+      return SCISSORS;
+    case 2:
+      return PAPER;
+  }
+
+  return ROCK;
+}
+
+void determineWinner(Choice playerChoice, Choice computerChoice) {
+  std::cout << "Вы выбрали: ";
+
+  switch (playerChoice) {
+    case ROCK:
+      std::cout << "Камень\n";
+      break;
+    case SCISSORS:
+      std::cout << "Ножницы\n";
+      break;
+    case PAPER:
+      std::cout << "Бумага\n";
+      break;
+  }
+
+  std::cout << "Компьютер выбрал: ";
+
+  switch (computerChoice) {
+    case ROCK:
+      std::cout << "Камень\n";
+      break;
+    case SCISSORS:
+      std::cout << "Ножницы\n";
+      break;
+    case PAPER:
+      std::cout << "Бумага\n";
+      break;
+  }
+
+  if (playerChoice == computerChoice) {
+    std::cout << "Ничья!\n";
+  } else if ((playerChoice == ROCK && computerChoice == SCISSORS) ||
+             (playerChoice == SCISSORS && computerChoice == PAPER) ||
+             (playerChoice == PAPER && computerChoice == ROCK)) {
+    std::cout << "Вы победили!\n";
+  } else {
+    std::cout << "Вы проиграли!\n";
+  }
+}
+
+int main() {
+  std::cout << "Добро пожаловать в игру 'Камень, ножницы, бумага'!\n";
+  std::cout << "---------------------------------------------\n";
+
+  Choice playerChoice = getPlayerChoice();
+  Choice computerChoice = getComputerChoice();
+
+  determineWinner(playerChoice, computerChoice);
+
+  return 0;
+}
